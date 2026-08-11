@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Furqan Chess — a sleek, premium two-player chess game with timed controls, full rules, sound effects, and beautiful board themes.">
+  <title>Furqan Chess — Play Locally</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-dark">
+  <div id="app" class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 45 45" width="28" height="28">
+            <path d="M22.5 6v6M19.5 9h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M11.5 37c5.5 3.5 16.5 3.5 22 0v-7c0-3-4-5-4-5H15.5s-4 2-4 5v7z" fill="currentColor" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h1 class="brand-title">FURQAN<span>CHESS</span></h1>
+      </div>
+
+      <div class="header-actions">
+        <button id="btn-new-game" class="btn btn-primary" title="Start a new game">
+          <span class="btn-icon">♟</span>
+          <span class="btn-text">New Game</span>
+        </button>
+        <button id="btn-sound-toggle" class="btn btn-icon-only" title="Toggle Sound">🔊</button>
+        <button id="btn-theme-toggle" class="btn btn-icon-only" title="Toggle Light/Dark Theme">🌓</button>
+        <button id="btn-settings" class="btn btn-icon-only" title="Settings">⚙️</button>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="app-main">
+      <!-- Left Column: Board & Player Panels -->
+      <section class="game-area">
+        <!-- Top Player Card -->
+        <div id="player-top-card" class="player-card">
+          <div class="player-info">
+            <div id="player-top-avatar" class="player-avatar"></div>
+            <div class="player-meta">
+              <span id="player-top-name" class="player-name">Black</span>
+              <div class="captured-bin">
+                <div id="player-top-captured" class="captured-pieces"></div>
+                <span id="player-top-advantage" class="material-advantage"></span>
+              </div>
+            </div>
+          </div>
+          <div id="player-top-clock" class="player-clock">10:00</div>
+        </div>
+
+        <!-- Chessboard -->
+        <div class="board-wrapper">
+          <div id="chessboard" class="chessboard board-theme-classic show-coords"></div>
+        </div>
+
+        <!-- Bottom Player Card -->
+        <div id="player-bottom-card" class="player-card">
+          <div class="player-info">
+            <div id="player-bottom-avatar" class="player-avatar"></div>
+            <div class="player-meta">
+              <span id="player-bottom-name" class="player-name">White</span>
+              <div class="captured-bin">
+                <div id="player-bottom-captured" class="captured-pieces"></div>
+                <span id="player-bottom-advantage" class="material-advantage"></span>
+              </div>
+            </div>
+          </div>
+          <div id="player-bottom-clock" class="player-clock">10:00</div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <button id="btn-undo" class="toolbar-btn" title="Undo Move (Left Arrow)">
+            <span class="toolbar-icon">↶</span>
+            <span class="toolbar-label">Undo</span>
+          </button>
+          <button id="btn-redo" class="toolbar-btn" title="Redo Move (Right Arrow)">
+            <span class="toolbar-icon">↷</span>
+            <span class="toolbar-label">Redo</span>
+          </button>
+          <button id="btn-flip" class="toolbar-btn" title="Flip Board (F)">
+            <span class="toolbar-icon">⇄</span>
+            <span class="toolbar-label">Flip</span>
+          </button>
+          <button id="btn-draw" class="toolbar-btn" title="Offer Draw">
+            <span class="toolbar-icon">🤝</span>
+            <span class="toolbar-label">Draw</span>
+          </button>
+          <button id="btn-resign" class="toolbar-btn toolbar-btn-danger" title="Resign Game">
+            <span class="toolbar-icon">🏳</span>
+            <span class="toolbar-label">Resign</span>
+          </button>
+        </div>
+
+        <!-- Status Banner -->
+        <div class="status-banner">
+          <span id="game-status-text">White's turn</span>
+        </div>
+      </section>
+
+      <!-- Right Column: Sidebar -->
+      <aside class="sidebar">
+        <!-- Move History -->
+        <div class="panel move-history-panel">
+          <div class="panel-header">
+            <h3>Move History</h3>
+          </div>
+          <div id="move-list" class="move-list">
+          </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="panel stats-panel">
+          <div class="panel-header">
+            <h3>Match Statistics</h3>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-value" id="stat-played">0</span>
+              <span class="stat-label">Played</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="stat-wwins">0</span>
+              <span class="stat-label">White Wins</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="stat-bwins">0</span>
+              <span class="stat-label">Black Wins</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="stat-draws">0</span>
+              <span class="stat-label">Draws</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <span>Furqan Chess &copy; 2026 — Built with passion</span>
+    </footer>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- New Game Modal -->
+  <div id="modal-new-game" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Start New Game</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="form-new-game" class="modal-body">
+        <div class="form-group">
+          <label for="new-game-time">Time Control</label>
+          <select id="new-game-time" class="form-control">
+            <option value="10+0" selected>10 min (Rapid)</option>
+            <option value="1+0">1 min (Bullet)</option>
+            <option value="3+0">3 min (Blitz)</option>
+            <option value="5+0">5 min (Blitz)</option>
+            <option value="15+10">15 min + 10s inc (Rapid)</option>
+            <option value="30+0">30 min (Classical)</option>
+            <option value="0+0">Unlimited Time</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn btn-primary">Start Game</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Promotion Selection Modal -->
+  <div id="modal-promotion" class="modal">
+    <div class="modal-content modal-content-small">
+      <div class="modal-header">
+        <h2>Choose Promotion Piece</h2>
+      </div>
+      <div class="promotion-grid">
+        <button class="promo-option" data-type="q" title="Promote to Queen"></button>
+        <button class="promo-option" data-type="r" title="Promote to Rook"></button>
+        <button class="promo-option" data-type="b" title="Promote to Bishop"></button>
+        <button class="promo-option" data-type="n" title="Promote to Knight"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Dialog -->
+  <div id="modal-confirm" class="modal">
+    <div class="modal-content modal-content-small">
+      <div class="modal-header">
+        <h2 id="confirm-title">Confirm Action</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-text">Are you sure?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-confirm-no" class="btn btn-secondary">Cancel</button>
+        <button id="btn-confirm-yes" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div id="modal-game-over" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="game-over-title">GAME OVER</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body text-center">
+        <p id="game-over-message" class="game-over-reason">Checkmate!</p>
+        <div class="pgn-actions">
+          <button id="btn-pgn-copy" class="btn btn-secondary">Copy PGN</button>
+          <button id="btn-pgn-download" class="btn btn-secondary">Download PGN</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-close">Review Board</button>
+        <button id="btn-rematch" class="btn btn-primary">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="modal-settings" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="setting-app-theme">App Theme</label>
+          <select id="setting-app-theme" class="form-control">
+            <option value="dark">Dark Theme (Cyber Charcoal)</option>
+            <option value="light">Light Theme (Warm Minimalist)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="setting-board-theme">Board Palette</label>
+          <select id="setting-board-theme" class="form-control">
+            <option value="classic">Classic Walnut & Oak</option>
+            <option value="wood">Rustic Wood</option>
+            <option value="slate">Modern Slate</option>
+            <option value="emerald">Emerald Green</option>
+            <option value="midnight">Midnight Cyber</option>
+          </select>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label><input type="checkbox" id="setting-coords" checked> Show Board Coordinates (a-h, 1-8)</label>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label><input type="checkbox" id="setting-hints" checked> Highlight Legal Move Hints</label>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label><input type="checkbox" id="setting-autoflip"> Auto-flip Board on Turn</label>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label><input type="checkbox" id="setting-sound" checked> Enable Sound Effects</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary modal-close">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/pieces.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
