@@ -29,16 +29,6 @@ Play Furqan Chess online:
 - LocalStorage — Saving settings and statistics
 - Web Audio API — Sound effects
 
-🚀 Getting Started
-
-Clone the repository:
-
-git clone https://github.com/YOUR-USERNAME/furqan-chess.git
-
-Open the project folder and launch "index.html" in your browser.
-
-No installation or backend server is required.
-
 🎮 How to Play
 
 1. Start a new game.
