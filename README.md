@@ -5,7 +5,7 @@ Furqan Chess is a modern, interactive two-player chess game built using HTML, CS
 🌐 Live Demo
 
 Play Furqan Chess online:
-"https://furqan-chess-game.netlify.app/" (https://reference-url-citation.invalid/0)
+"https://furqan-chess-game.netlify.app/" 
 
 ✨ Features
 
